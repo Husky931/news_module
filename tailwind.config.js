@@ -7,6 +7,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        'custom-green': '#0d979c',
+      },
+      borderColor: theme => ({
+        ...theme('colors'),  // This line is necessary to add all existing color borders
+        'custom-green': '#0d979c',
+      }),
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
