@@ -38,7 +38,7 @@ const NewsCard = ({ data }: NewsCardProps) => {
     }, [])
     return (
         <Link href={data!.url} target="_blank">
-            <Box className="bg-[#ffffff] p-4 rounded-xl w-full my-4 cursor-pointer">
+            <Box className="bg-[#ffffff] p-4 rounded-xl w-full my-4 cursor-pointer max-w-[853px] mx-auto">
                 <div className="w-full flex justify-between text-[13px]">
                     <div className="flex">
                         <div className="text-[#9fa6b2] tracking-tighter">

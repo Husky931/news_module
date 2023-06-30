@@ -8,7 +8,7 @@ const SwitchTab = ({ selectedTab, handleClick }: SwitchTabType) => {
         <div className="flex bg-[#f9fafb] p-[3px] rounded-full border border-custom-green ">
             <div
                 onClick={() => handleClick(1)}
-                className={`px-5 py-2 tracking-tighter  ${
+                className={`px-5 py-2 tracking-tighter ${
                     selectedTab === 1
                         ? "bg-[#0d979c] text-[#f9fafb] rounded-full"
                         : "text-center"
