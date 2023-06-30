@@ -30,10 +30,10 @@ export default function Home() {
         const getTrendingNews = async () => {
             setLoading(true)
             const res = await fetch(
-                `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API_4}&text=trending%20vehicle%20industry&text=supply%20chain%20trending&language=en&sort=publish-time&sort-direction=DESC&number=100`
+                `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=trending%20vehicle%20industry&text=supply%20chain%20trending&language=en&sort=publish-time&sort-direction=DESC&number=100`
             )
             const result = await res.json()
-            setTrending(result.news.reverse())
+            setTrending(result.news)
             setLoading(false)
         }
         getTrendingNews()
@@ -42,10 +42,10 @@ export default function Home() {
         // chaining multiple entities=ORG:BMW doesn't give results
         const getSupplierNews = async () => {
             const res = await fetch(
-                `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API_4}&text=tesla&text=bmw&text=Toyota&text=mercedes%20benz&text=ford&&language=en&sort=publish-time&sort-direction=DESC&number=100`
+                `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=tesla&text=bmw&text=Toyota&text=mercedes%20benz&text=ford&&language=en&sort=publish-time&sort-direction=DESC&number=100`
             )
             const result = await res.json()
-            setSupplier(result.news.reverse())
+            setSupplier(result.news)
         }
         getSupplierNews()
     }, [])
@@ -53,10 +53,10 @@ export default function Home() {
     useEffect(() => {
         const getRiskyNews = async () => {
             const res = await fetch(
-                `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API_4}&text=automobile%20industry&min-sentiment=-1.0&max-sentiment=0.2&earliest-publish-date=${dateString}&language=en&sort=publish-time&sort-direction=DESC&number=100`
+                `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=automobile%20industry&min-sentiment=-1.0&max-sentiment=0.2&earliest-publish-date=${dateString}&language=en&sort=publish-time&sort-direction=DESC&number=100`
             )
             const result = await res.json()
-            setRisky(result.news.reverse())
+            setRisky(result.news)
         }
         getRiskyNews()
     }, [])
