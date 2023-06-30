@@ -14,7 +14,11 @@ type NewsCardData = {
     url: string
 }
 
-const NewsCard = () => {
+type NewsCardProps = {
+    data: NewsCardData[] | undefined
+}
+
+const NewsCard = ({ data }: NewsCardProps) => {
     const [windowWidth, setWindowWidth] = useState<number | null>(null)
     const width = useWindowWidth()
 
@@ -22,7 +26,7 @@ const NewsCard = () => {
         setWindowWidth(width)
     }, [])
     return (
-        <Box className="bg-[#ffffff] p-4 rounded-xl w-full">
+        <Box className="bg-[#ffffff] p-4 rounded-xl w-full my-4">
             <div className="w-full flex justify-between text-[13px]">
                 <div className="flex">
                     <div className="text-[#9fa6b2] tracking-tighter">

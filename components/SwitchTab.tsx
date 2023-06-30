@@ -1,17 +1,14 @@
-import { useState } from "react"
+type SwitchTabType = {
+    selectedTab: number
+    handleClick: (newValue: number) => void
+}
 
-const SwitchTab = () => {
-    const [selectedTab, setSelectedTab] = useState<number>(1)
-
-    const handleClick = (newValue: number) => {
-        setSelectedTab(newValue)
-    }
-
+const SwitchTab = ({ selectedTab, handleClick }: SwitchTabType) => {
     return (
-        <div className="flex bg-[#f9fafb] p-[3px] rounded-full border border-custom-green">
+        <div className="flex bg-[#f9fafb] p-[3px] rounded-full border border-custom-green ">
             <div
                 onClick={() => handleClick(1)}
-                className={`px-4 py-2 ${
+                className={`px-5 py-2 tracking-tighter  ${
                     selectedTab === 1
                         ? "bg-[#0d979c] text-[#f9fafb] rounded-full"
                         : "text-center"
@@ -21,7 +18,7 @@ const SwitchTab = () => {
             </div>
             <div
                 onClick={() => handleClick(2)}
-                className={`px-4 py-2 ${
+                className={`px-5 py-2 ${
                     selectedTab === 2
                         ? "bg-[#0d979c] text-[#f9fafb] rounded-full"
                         : "text-center"
@@ -31,7 +28,7 @@ const SwitchTab = () => {
             </div>
             <div
                 onClick={() => handleClick(3)}
-                className={`px-4 py-2 ${
+                className={`px-5 py-2 ${
                     selectedTab === 3
                         ? "bg-[#0d979c] text-[#f9fafb] rounded-full"
                         : "text-center"
