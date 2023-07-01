@@ -37,8 +37,8 @@ const NewsCard = ({ data }: NewsCardProps) => {
         setWindowWidth(width)
     }, [])
     return (
-        <Link href={data!.url} target="_blank">
-            <Box className="bg-[#ffffff] p-4 rounded-xl w-full my-4 cursor-pointer max-w-[853px] mx-auto">
+        <Box className="bg-[#ffffff] p-4 rounded-xl w-full my-4 cursor-pointer max-w-[853px] mx-auto">
+            <Link href={data!.url} target="_blank">
                 <div className="w-full flex justify-between text-[13px]">
                     <div className="flex">
                         <div className="text-[#9fa6b2] tracking-tighter">
@@ -57,19 +57,28 @@ const NewsCard = ({ data }: NewsCardProps) => {
                     )}
                 </div>
 
-                <Box className="text-[#1a1a1a] text-[18px] sm:text-[24px] font-[500] truncate">
+                <Box className="text-[#1a1a1a] text-[18px] sm:text-[24px] font-[500]">
                     {data?.title}
                 </Box>
-                <Box className="inline-flex text-[13px] bg-[#e6f5f5] gap-x-1 w-auto">
-                    <div className="flex text-[#816CFF] px-1">
-                        <div>ALUMINIUM</div>
-                    </div>
+                <Box className="inline-flex text-[13px] bg-[#e6f5f5] gap-x-1 w-auto flex-wrap">
+                    {data?.tags
+                        .sort((a, b) => b.count - a.count)
+                        .slice(0, 5)
+                        .map((tag) => (
+                            <div
+                                className="flex text-[#816CFF] px-1"
+                                key={tag.keyword}
+                            >
+                                {tag.keyword}
+                                {/* : {tag.count} */}
+                            </div>
+                        ))}
                     <div className="flex text-[#78B53B] px-1">
-                        <div>CHASIS</div>
+                        <div>{data?.author}</div>
                     </div>
                 </Box>
-            </Box>
-        </Link>
+            </Link>
+        </Box>
     )
 }
 

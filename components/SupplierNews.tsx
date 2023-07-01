@@ -6,7 +6,8 @@ type SupplierNewsProp = {
 }
 
 const SupplierNews = ({ supplier }: SupplierNewsProp) => {
-    if (!supplier) return <h1>No posts to display</h1>
+    if (!supplier)
+        return <h1 className="text-center mt-10">No posts to display</h1>
 
     return (
         <>

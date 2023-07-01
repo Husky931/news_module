@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react"
-import { Box } from "@mui/material"
+import { Box } from "@mui/system"
 import SwitchTab from "@/components/SwitchTab"
 import RiskNews from "@/components/RiskyNews"
 import TrendingNews from "@/components/TrendingNews"
 import SupplierNews from "@/components/SupplierNews"
 import { dateString } from "@/utils/date"
 import { NewsCardData } from "@/types"
+import { TagsType } from "@/types"
 import { ColorRing } from "react-loader-spinner"
 
 export default function Home() {
@@ -26,44 +27,111 @@ export default function Home() {
     }
     const [loading, setLoading] = useState<boolean>(true)
 
+    const keywords = [
+        "Automotive",
+        "Supply Chain",
+        "Automobile",
+        "Supplier",
+        "Tier 1",
+        "Tier 2",
+        "Car Component",
+        "Vehicle",
+        "Vehicle component"
+    ]
+
     useEffect(() => {
+        const analyzeKeywords = (newsData: NewsCardData[]) => {
+            return newsData.map((newsItem: NewsCardData) => {
+                const tags: TagsType[] = []
+                keywords.forEach((keyword) => {
+                    const regex = new RegExp(`\\b${keyword}\\b`, "gi")
+                    const matches = newsItem.text.match(regex)
+                    if (matches && matches.length > 0) {
+                        tags.push({ keyword, count: matches.length })
+                    }
+                })
+                return { ...newsItem, tags }
+            })
+        }
+
         const getTrendingNews = async () => {
             setLoading(true)
             const res = await fetch(
-                `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API_5}&text=trending%20vehicle%20industry&text=supply%20chain%20trending&language=en&sort=publish-time&sort-direction=DESC&number=100`
+                `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=automotive&language=en&sort=publish-time&sort-direction=DESC&number=100`
             )
             const result = await res.json()
-            setTrending(result.news.reverse())
+            if (result.news) {
+                const analyzedNews = analyzeKeywords(result.news.reverse())
+                console.log(analyzedNews)
+                setTrending(analyzedNews)
+            } else {
+                setTrending(undefined)
+            }
             setLoading(false)
         }
         getTrendingNews()
     }, [])
-    useEffect(() => {
-        // chaining multiple entities=ORG:BMW doesn't give results
-        const getSupplierNews = async () => {
-            const res = await fetch(
-                `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API_5}&text=tesla&text=bmw&text=Toyota&text=mercedes%20benz&text=ford&&language=en&sort=publish-time&sort-direction=DESC&number=100`
-            )
-            const result = await res.json()
-            setSupplier(result.news.reverse())
-        }
-        getSupplierNews()
-    }, [])
 
-    useEffect(() => {
-        const getRiskyNews = async () => {
-            const res = await fetch(
-                `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API_5}&text=automobile%20industry&min-sentiment=-1.0&max-sentiment=0.2&earliest-publish-date=${dateString}&language=en&sort=publish-time&sort-direction=DESC&number=100`
-            )
-            const result = await res.json()
-            setRisky(result.news.reverse())
-        }
-        getRiskyNews()
-    }, [])
+    // useEffect(() => {
+    //     const getTrendingNews = async () => {
+    //         setLoading(true)
+    //         const res = await fetch(
+    //             `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=automotive&language=en&sort=publish-time&sort-direction=DESC&number=100`
+    //         )
+    //         const result = await res.json()
+    //         console.log(result)
+    //         if (result.news) setTrending(result.news.reverse())
+    //         else {
+    //             setTrending(undefined)
+    //         }
+    //         setLoading(false)
+    //     }
+    //     getTrendingNews()
+    // }, [])
+
+    // useEffect(() => {
+    //     // chaining multiple entities=ORG:BMW doesn't give results
+    //     const getSupplierNews = async () => {
+    //         const res = await fetch(
+    //             `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=africa+hamburger&language=en&sort=publish-time&sort-direction=DESC&number=100`
+    //         )
+    //         const result = await res.json()
+    //         console.log(result)
+    //         if (result.news) setSupplier(result.news.reverse())
+    //         else {
+    //             setSupplier(undefined)
+    //         }
+    //     }
+    //     getSupplierNews()
+    // }, [])
+
+    // useEffect(() => {
+    //     const getRiskyNews = async () => {
+    //         const res = await fetch(
+    //             `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=automobile%20industry&min-sentiment=-1.0&max-sentiment=0&earliest-publish-date=${dateString}&language=en&sort=publish-time&sort-direction=DESC&number=100`
+    //         )
+    //         const result = await res.json()
+    //         if (result.news) setRisky(result.news.reverse())
+    //         else {
+    //             setRisky(undefined)
+    //         }
+    //     }
+    //     getRiskyNews()
+    // }, [])
 
     if (loading)
         return (
-            <main className="flex min-h-screen flex-col items-center justify-start p-24 px-8 sm:px-24">
+            <Box
+                sx={{
+                    display: "flex",
+                    minHeight: "100vh",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    p: 3,
+                    px: { xs: 1, sm: 3 }
+                }}
+            >
                 <SwitchTab
                     selectedTab={selectedTab}
                     handleClick={handleClick}
@@ -81,17 +149,29 @@ export default function Home() {
                         "#849b87"
                     ]}
                 />
-            </main>
+            </Box>
         )
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-start p-24 px-8 sm:px-24">
+        <Box
+            sx={{
+                display: "flex",
+                minHeight: "100vh",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                p: 3,
+                px: { xs: 1, sm: 3 },
+                mt: 2.5,
+                width: "100%"
+            }}
+        >
             <SwitchTab selectedTab={selectedTab} handleClick={handleClick} />
-            <Box className="mt-10 w-full ">
+            <Box sx={{ width: "100%" }}>
                 {selectedTab === 1 && <TrendingNews trending={trending} />}
                 {selectedTab === 2 && <SupplierNews supplier={supplier} />}
                 {selectedTab === 3 && <RiskNews risky={risky} />}
             </Box>
-        </main>
+        </Box>
     )
 }

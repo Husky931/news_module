@@ -6,7 +6,8 @@ type TrendingProp = {
 }
 
 const TrendingNews = ({ trending }: TrendingProp) => {
-    if (!trending) return <h1>No posts to display</h1>
+    if (!trending)
+        return <h1 className="text-center mt-10">No posts to display</h1>
 
     return (
         <>

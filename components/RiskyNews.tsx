@@ -6,7 +6,8 @@ type RiskyNewsProp = {
 }
 
 const RiskyNews = ({ risky }: RiskyNewsProp) => {
-    if (!risky) return <h1>No posts to display</h1>
+    if (!risky)
+        return <h1 className="text-center mt-10">No posts to display</h1>
 
     return (
         <>

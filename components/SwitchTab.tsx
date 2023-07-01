@@ -1,3 +1,5 @@
+import { Box } from "@mui/system"
+
 type SwitchTabType = {
     selectedTab: number
     handleClick: (newValue: number) => void
@@ -5,38 +7,66 @@ type SwitchTabType = {
 
 const SwitchTab = ({ selectedTab, handleClick }: SwitchTabType) => {
     return (
-        <div className="flex bg-[#f9fafb] p-[3px] rounded-full border border-custom-green ">
-            <div
+        <Box
+            sx={{
+                display: "flex",
+                backgroundColor: "#f9fafb",
+                padding: "3px",
+                borderRadius: "50px",
+                borderColor: "#0d979c",
+                borderWidth: "1px",
+                borderStyle: "solid"
+            }}
+        >
+            <Box
                 onClick={() => handleClick(1)}
-                className={`px-5 py-2 tracking-tighter ${
-                    selectedTab === 1
-                        ? "bg-[#0d979c] text-[#f9fafb] rounded-full"
-                        : "text-center"
-                }`}
+                sx={{
+                    px: 2,
+                    py: 1,
+                    cursor: "pointer",
+                    letterSpacing: "-0.025em",
+                    backgroundColor:
+                        selectedTab === 1 ? "#0d979c" : "transparent",
+                    color: selectedTab === 1 ? "#f9fafb" : "black",
+                    borderRadius: "50px",
+                    textAlign: "center"
+                }}
             >
                 Industry & Trend
-            </div>
-            <div
+            </Box>
+            <Box
                 onClick={() => handleClick(2)}
-                className={`px-5 py-2 ${
-                    selectedTab === 2
-                        ? "bg-[#0d979c] text-[#f9fafb] rounded-full"
-                        : "text-center"
-                }`}
+                sx={{
+                    px: 2,
+                    py: 1,
+                    cursor: "pointer",
+                    letterSpacing: "-0.025em",
+                    backgroundColor:
+                        selectedTab === 2 ? "#0d979c" : "transparent",
+                    color: selectedTab === 2 ? "#f9fafb" : "black",
+                    borderRadius: "50px",
+                    textAlign: "center"
+                }}
             >
                 Supplier
-            </div>
-            <div
+            </Box>
+            <Box
                 onClick={() => handleClick(3)}
-                className={`px-5 py-2 ${
-                    selectedTab === 3
-                        ? "bg-[#0d979c] text-[#f9fafb] rounded-full"
-                        : "text-center"
-                }`}
+                sx={{
+                    px: 2,
+                    py: 1,
+                    cursor: "pointer",
+                    letterSpacing: "-0.025em",
+                    backgroundColor:
+                        selectedTab === 3 ? "#0d979c" : "transparent",
+                    color: selectedTab === 3 ? "#f9fafb" : "black",
+                    borderRadius: "50px",
+                    textAlign: "center"
+                }}
             >
                 Risk
-            </div>
-        </div>
+            </Box>
+        </Box>
     )
 }
 
