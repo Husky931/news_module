@@ -27,7 +27,7 @@ export default function Home() {
     }
     const [loading, setLoading] = useState<boolean>(true)
 
-    const keywords = [
+    const trendingKeywords = [
         "Automotive",
         "Supply Chain",
         "Automobile",
@@ -38,22 +38,44 @@ export default function Home() {
         "Vehicle",
         "Vehicle component"
     ]
+    const supplierKeywords = [
+        "Tesla",
+        "Porsche",
+        "Aston Martin",
+        "BMW",
+        "Audi",
+        "Daimler"
+    ]
+
+    const riskyKeywords = [
+        "landslide",
+        "mud-rock flow",
+        "avalanche",
+        "rainstorm",
+        "flood",
+        "drought",
+        "earthquake",
+        "typhoon",
+        "tornado",
+        "tsunami",
+        "seismic sea wave"
+    ]
+
+    const analyzeKeywords = (newsData: NewsCardData[], keywords: string[]) => {
+        return newsData.map((newsItem: NewsCardData) => {
+            const tags: TagsType[] = []
+            keywords.forEach((keyword) => {
+                const regex = new RegExp(`\\b${keyword}\\b`, "gi")
+                const matches = newsItem.text.match(regex)
+                if (matches && matches.length > 0) {
+                    tags.push({ keyword, count: matches.length })
+                }
+            })
+            return { ...newsItem, tags }
+        })
+    }
 
     useEffect(() => {
-        const analyzeKeywords = (newsData: NewsCardData[]) => {
-            return newsData.map((newsItem: NewsCardData) => {
-                const tags: TagsType[] = []
-                keywords.forEach((keyword) => {
-                    const regex = new RegExp(`\\b${keyword}\\b`, "gi")
-                    const matches = newsItem.text.match(regex)
-                    if (matches && matches.length > 0) {
-                        tags.push({ keyword, count: matches.length })
-                    }
-                })
-                return { ...newsItem, tags }
-            })
-        }
-
         const getTrendingNews = async () => {
             setLoading(true)
             const res = await fetch(
@@ -61,7 +83,10 @@ export default function Home() {
             )
             const result = await res.json()
             if (result.news) {
-                const analyzedNews = analyzeKeywords(result.news.reverse())
+                const analyzedNews = analyzeKeywords(
+                    result.news.reverse(),
+                    trendingKeywords
+                )
                 console.log(analyzedNews)
                 setTrending(analyzedNews)
             } else {
@@ -72,52 +97,46 @@ export default function Home() {
         getTrendingNews()
     }, [])
 
-    // useEffect(() => {
-    //     const getTrendingNews = async () => {
-    //         setLoading(true)
-    //         const res = await fetch(
-    //             `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=automotive&language=en&sort=publish-time&sort-direction=DESC&number=100`
-    //         )
-    //         const result = await res.json()
-    //         console.log(result)
-    //         if (result.news) setTrending(result.news.reverse())
-    //         else {
-    //             setTrending(undefined)
-    //         }
-    //         setLoading(false)
-    //     }
-    //     getTrendingNews()
-    // }, [])
+    useEffect(() => {
+        // chaining multiple entities=ORG:BMW doesn't give results
+        const getSupplierNews = async () => {
+            const res = await fetch(
+                `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=mitsubishi&language=en&sort=publish-time&sort-direction=DESC&number=40`
+            )
+            const result = await res.json()
+            if (result.news) {
+                const analyzedNews = analyzeKeywords(
+                    result.news.reverse(),
+                    supplierKeywords
+                )
+                console.log(analyzedNews)
+                setSupplier(analyzedNews)
+            } else {
+                setSupplier(undefined)
+            }
+        }
+        getSupplierNews()
+    }, [])
 
-    // useEffect(() => {
-    //     // chaining multiple entities=ORG:BMW doesn't give results
-    //     const getSupplierNews = async () => {
-    //         const res = await fetch(
-    //             `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=africa+hamburger&language=en&sort=publish-time&sort-direction=DESC&number=100`
-    //         )
-    //         const result = await res.json()
-    //         console.log(result)
-    //         if (result.news) setSupplier(result.news.reverse())
-    //         else {
-    //             setSupplier(undefined)
-    //         }
-    //     }
-    //     getSupplierNews()
-    // }, [])
-
-    // useEffect(() => {
-    //     const getRiskyNews = async () => {
-    //         const res = await fetch(
-    //             `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=automobile%20industry&min-sentiment=-1.0&max-sentiment=0&earliest-publish-date=${dateString}&language=en&sort=publish-time&sort-direction=DESC&number=100`
-    //         )
-    //         const result = await res.json()
-    //         if (result.news) setRisky(result.news.reverse())
-    //         else {
-    //             setRisky(undefined)
-    //         }
-    //     }
-    //     getRiskyNews()
-    // }, [])
+    useEffect(() => {
+        const getRiskyNews = async () => {
+            const res = await fetch(
+                `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=landslide&min-sentiment=-1.0&max-sentiment=0&earliest-publish-date=${dateString}&language=en&sort=publish-time&sort-direction=DESC&number=30`
+            )
+            const result = await res.json()
+            if (result.news) {
+                const analyzedNews = analyzeKeywords(
+                    result.news.reverse(),
+                    riskyKeywords
+                )
+                console.log(analyzedNews)
+                setRisky(analyzedNews)
+            } else {
+                setRisky(undefined)
+            }
+        }
+        getRiskyNews()
+    }, [])
 
     if (loading)
         return (
