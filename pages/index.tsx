@@ -39,12 +39,42 @@ export default function Home() {
         "Vehicle component"
     ]
     const supplierKeywords = [
-        "Tesla",
-        "Porsche",
-        "Aston Martin",
-        "BMW",
-        "Audi",
-        "Daimler"
+        "Bosch",
+        "Continental",
+        "Gates",
+        "Aisin Seiki",
+        "GMB",
+        "Mahle",
+        "SKF Group",
+        "Hitachi Automotive Systems",
+        "Valeo",
+        "Schaeffler",
+        "BorgWarner",
+        "Honeywell",
+        "Mitsubishi",
+        "Continental",
+        "Eaton",
+        "IHI",
+        "Bosch",
+        "ABB Turbocharging",
+        "Cummins",
+        "Rotrex",
+        "LG Chem",
+        "Samsung SDI",
+        "Panasonic",
+        "CATL",
+        "BYD",
+        "SK Innovation",
+        "Johnson Controls",
+        "Toshiba",
+        "A123 Systems",
+        "Hitachi Chemical",
+        "DELPHI",
+        "Aptiv",
+        "Aisan",
+        "KENDRION",
+        "KENI AUTO",
+        "KYOSEI"
     ]
 
     const riskyKeywords = [
