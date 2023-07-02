@@ -105,11 +105,39 @@ export default function Home() {
         })
     }
 
+    //The function below is when you want to loop the request for each keyword, store all the results in allAnalyzedNews array and after all the requests and tag count is done, set the setTrending state
+    // useEffect(() => {
+    //     const getTrendingNews = async () => {
+    //         setLoading(true)
+    //         let allAnalyzedNews = []
+    //         for(let i = 0; i < textKeywords.length; i++) {
+    //             const res = await fetch(
+    //                 `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API_2}&text=${encodeURIComponent(textKeywords[i])}&language=en&sort=publish-time&sort-direction=DESC&number=100`
+    //             )
+    //             const result = await res.json()
+    //             if (result.news) {
+    //                 const analyzedNews = analyzeKeywords(
+    //                     result.news.reverse(),
+    //                     trendingKeywords
+    //                 )
+    //                 allAnalyzedNews = [...allAnalyzedNews, ...analyzedNews]
+    //             }
+    //         }
+    //         if (allAnalyzedNews.length > 0) {
+    //             setTrending(allAnalyzedNews)
+    //         } else {
+    //             setTrending(undefined)
+    //         }
+    //         setLoading(false)
+    //     }
+    //     getTrendingNews()
+    // }, [])
+
     useEffect(() => {
         const getTrendingNews = async () => {
             setLoading(true)
             const res = await fetch(
-                `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=automotive&language=en&sort=publish-time&sort-direction=DESC&number=100`
+                `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API_2}&text=automotive&language=en&sort=publish-time&sort-direction=DESC&number=100`
             )
             const result = await res.json()
             if (result.news) {
@@ -117,7 +145,7 @@ export default function Home() {
                     result.news.reverse(),
                     trendingKeywords
                 )
-                console.log(analyzedNews)
+                // console.log(analyzedNews)
                 setTrending(analyzedNews)
             } else {
                 setTrending(undefined)
@@ -127,46 +155,45 @@ export default function Home() {
         getTrendingNews()
     }, [])
 
-    useEffect(() => {
-        // chaining multiple entities=ORG:BMW doesn't give results
-        const getSupplierNews = async () => {
-            const res = await fetch(
-                `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=mitsubishi&language=en&sort=publish-time&sort-direction=DESC&number=40`
-            )
-            const result = await res.json()
-            if (result.news) {
-                const analyzedNews = analyzeKeywords(
-                    result.news.reverse(),
-                    supplierKeywords
-                )
-                console.log(analyzedNews)
-                setSupplier(analyzedNews)
-            } else {
-                setSupplier(undefined)
-            }
-        }
-        getSupplierNews()
-    }, [])
+    // useEffect(() => {
+    //     const getSupplierNews = async () => {
+    //         const res = await fetch(
+    //             `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=tesla&language=en&sort=publish-time&sort-direction=DESC&number=40`
+    //         )
+    //         const result = await res.json()
+    //         if (result.news) {
+    //             const analyzedNews = analyzeKeywords(
+    //                 result.news.reverse(),
+    //                 supplierKeywords
+    //             )
+    //             // console.log(analyzedNews)
+    //             setSupplier(analyzedNews)
+    //         } else {
+    //             setSupplier(undefined)
+    //         }
+    //     }
+    //     getSupplierNews()
+    // }, [])
 
-    useEffect(() => {
-        const getRiskyNews = async () => {
-            const res = await fetch(
-                `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=landslide&min-sentiment=-1.0&max-sentiment=0&earliest-publish-date=${dateString}&language=en&sort=publish-time&sort-direction=DESC&number=30`
-            )
-            const result = await res.json()
-            if (result.news) {
-                const analyzedNews = analyzeKeywords(
-                    result.news.reverse(),
-                    riskyKeywords
-                )
-                console.log(analyzedNews)
-                setRisky(analyzedNews)
-            } else {
-                setRisky(undefined)
-            }
-        }
-        getRiskyNews()
-    }, [])
+    // useEffect(() => {
+    //     const getRiskyNews = async () => {
+    //         const res = await fetch(
+    //             `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=landslide&min-sentiment=-1.0&max-sentiment=0&earliest-publish-date=${dateString}&language=en&sort=publish-time&sort-direction=DESC&number=30`
+    //         )
+    //         const result = await res.json()
+    //         if (result.news) {
+    //             const analyzedNews = analyzeKeywords(
+    //                 result.news.reverse(),
+    //                 riskyKeywords
+    //             )
+    //             // console.log(analyzedNews)
+    //             setRisky(analyzedNews)
+    //         } else {
+    //             setRisky(undefined)
+    //         }
+    //     }
+    //     getRiskyNews()
+    // }, [])
 
     if (loading)
         return (

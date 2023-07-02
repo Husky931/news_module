@@ -48,13 +48,23 @@ const NewsCard = ({ data }: NewsCardProps) => {
                             {getName(data!.source_country!)}
                         </div>
                     </div>
-                    {windowWidth! > 639 && (
+
+                    <div className="flex">
+                        <div className="text-[#445b66]">
+                            Author:{" "}
+                            <span className="text-[#78B53B]">
+                                {data?.author}
+                            </span>
+                        </div>
+                    </div>
+
+                    {/* {windowWidth! > 639 && (
                         <div className="flex">
                             <div className="text-[#445b66]">
-                                {data?.news_sources}
+                                Author: {data?.author}
                             </div>
                         </div>
-                    )}
+                    )} */}
                 </div>
 
                 <Box className="text-[#1a1a1a] text-[18px] sm:text-[24px] font-[500]">
@@ -73,9 +83,9 @@ const NewsCard = ({ data }: NewsCardProps) => {
                                 {/* : {tag.count} */}
                             </div>
                         ))}
-                    <div className="flex text-[#78B53B] px-1">
+                    {/* <div className="flex text-[#78B53B] px-1">
                         <div>{data?.author}</div>
-                    </div>
+                    </div> */}
                 </Box>
             </Link>
         </Box>
