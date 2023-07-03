@@ -155,45 +155,45 @@ export default function Home() {
         getTrendingNews()
     }, [])
 
-    // useEffect(() => {
-    //     const getSupplierNews = async () => {
-    //         const res = await fetch(
-    //             `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=tesla&language=en&sort=publish-time&sort-direction=DESC&number=40`
-    //         )
-    //         const result = await res.json()
-    //         if (result.news) {
-    //             const analyzedNews = analyzeKeywords(
-    //                 result.news.reverse(),
-    //                 supplierKeywords
-    //             )
-    //             // console.log(analyzedNews)
-    //             setSupplier(analyzedNews)
-    //         } else {
-    //             setSupplier(undefined)
-    //         }
-    //     }
-    //     getSupplierNews()
-    // }, [])
+    useEffect(() => {
+        const getSupplierNews = async () => {
+            const res = await fetch(
+                `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=tesla&language=en&sort=publish-time&sort-direction=DESC&number=40`
+            )
+            const result = await res.json()
+            if (result.news) {
+                const analyzedNews = analyzeKeywords(
+                    result.news.reverse(),
+                    supplierKeywords
+                )
+                // console.log(analyzedNews)
+                setSupplier(analyzedNews)
+            } else {
+                setSupplier(undefined)
+            }
+        }
+        getSupplierNews()
+    }, [])
 
-    // useEffect(() => {
-    //     const getRiskyNews = async () => {
-    //         const res = await fetch(
-    //             `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=landslide&min-sentiment=-1.0&max-sentiment=0&earliest-publish-date=${dateString}&language=en&sort=publish-time&sort-direction=DESC&number=30`
-    //         )
-    //         const result = await res.json()
-    //         if (result.news) {
-    //             const analyzedNews = analyzeKeywords(
-    //                 result.news.reverse(),
-    //                 riskyKeywords
-    //             )
-    //             // console.log(analyzedNews)
-    //             setRisky(analyzedNews)
-    //         } else {
-    //             setRisky(undefined)
-    //         }
-    //     }
-    //     getRiskyNews()
-    // }, [])
+    useEffect(() => {
+        const getRiskyNews = async () => {
+            const res = await fetch(
+                `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=landslide&min-sentiment=-1.0&max-sentiment=0&earliest-publish-date=${dateString}&language=en&sort=publish-time&sort-direction=DESC&number=30`
+            )
+            const result = await res.json()
+            if (result.news) {
+                const analyzedNews = analyzeKeywords(
+                    result.news.reverse(),
+                    riskyKeywords
+                )
+                // console.log(analyzedNews)
+                setRisky(analyzedNews)
+            } else {
+                setRisky(undefined)
+            }
+        }
+        getRiskyNews()
+    }, [])
 
     if (loading)
         return (
