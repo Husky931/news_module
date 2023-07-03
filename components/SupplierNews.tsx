@@ -14,6 +14,7 @@ const SupplierNews = ({ supplier }: SupplierNewsProp) => {
             {supplier?.map((m, i) => (
                 <NewsCard key={m.id} data={m} />
             ))}
+            <div className="text-center">No more articles</div>
         </>
     )
 }

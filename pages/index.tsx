@@ -105,7 +105,7 @@ export default function Home() {
         })
     }
 
-    //The function below is when you want to loop the request for each keyword, store all the results in allAnalyzedNews array and after all the requests and tag count is done, set the setTrending state
+    // The function below is when you want to loop the request `for each key`word, store all the results in allAnalyzedNews array and after all the requests and tag count is done, set the setTrending state
     // useEffect(() => {
     //     const getTrendingNews = async () => {
     //         setLoading(true)
@@ -145,7 +145,7 @@ export default function Home() {
                     result.news.reverse(),
                     trendingKeywords
                 )
-                // console.log(analyzedNews)
+                console.log(analyzedNews)
                 setTrending(analyzedNews)
             } else {
                 setTrending(undefined)
@@ -158,7 +158,7 @@ export default function Home() {
     useEffect(() => {
         const getSupplierNews = async () => {
             const res = await fetch(
-                `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=tesla&language=en&sort=publish-time&sort-direction=DESC&number=40`
+                `https://api.worldnewsapi.com/search-news?api-key=${process.env.NEXT_PUBLIC_WORLD_NEWS_API}&text=schaeffler&language=en&sort=publish-time&sort-direction=DESC&number=40`
             )
             const result = await res.json()
             if (result.news) {
@@ -166,7 +166,6 @@ export default function Home() {
                     result.news.reverse(),
                     supplierKeywords
                 )
-                // console.log(analyzedNews)
                 setSupplier(analyzedNews)
             } else {
                 setSupplier(undefined)
@@ -186,7 +185,6 @@ export default function Home() {
                     result.news.reverse(),
                     riskyKeywords
                 )
-                // console.log(analyzedNews)
                 setRisky(analyzedNews)
             } else {
                 setRisky(undefined)

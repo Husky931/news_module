@@ -1,5 +1,6 @@
 import NewsCard from "./NewsCard"
 import { NewsCardData } from "@/types"
+import { Box } from "@mui/system"
 
 type TrendingProp = {
     trending: NewsCardData[] | undefined
@@ -14,6 +15,7 @@ const TrendingNews = ({ trending }: TrendingProp) => {
             {trending?.map((m, i) => (
                 <NewsCard key={m.id} data={m} />
             ))}
+            <div className="text-center">No more articles</div>
         </>
     )
 }
